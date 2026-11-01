@@ -8,7 +8,7 @@ AMUMA is a lifestyle companion, **not a medical application**. It does not diagn
 
 ## Status
 
-**Foundation (pre-Milestone 1).** The Expo project, design system, navigation skeleton and documentation exist. Feature screens are labelled placeholders with no mock data. See [docs/DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md).
+**Milestone 1 (auth) code complete.** Foundation plus Supabase auth, secure sessions, route gate and account deletion. Backend setup steps are in [supabase/README.md](supabase/README.md). Other feature screens are labelled placeholders with no mock data. See [docs/DEVELOPMENT_ROADMAP.md](docs/DEVELOPMENT_ROADMAP.md).
 
 ## Stack
 
@@ -22,7 +22,7 @@ cp .env.example .env     # fill in Supabase URL + anon key (public values only)
 npx expo start
 ```
 
-Scripts: `npm run typecheck` · `npm run lint` · `npm test`.
+Scripts: `npm run typecheck` · `npm run lint` · `npm test` · `./supabase/tests/run-local.sh` (RLS tests on local Postgres).
 
 Without Supabase credentials the app still launches (design system and navigation); backend features arrive from Milestone 1.
 

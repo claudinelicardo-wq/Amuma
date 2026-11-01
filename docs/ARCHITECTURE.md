@@ -33,7 +33,7 @@ docs/
 State rule: **server state → TanStack Query; device-local UI state → Zustand; forms → React Hook Form + Zod.**
 
 ## Auth and routing
-Supabase Auth; session in `expo-secure-store` (Milestone 1; the foundation client temporarily uses AsyncStorage). A root gate redirects: signed out → `(auth)`, signed in without onboarding → `(onboarding)`, else `(tabs)`. Route protection is UX only; data protection is RLS.
+Supabase Auth; session tokens in `expo-secure-store` (chunked, since sessions exceed its per-value limit; AsyncStorage on web). The root layout uses `Stack.Protected`: signed out → `(auth)` only, signed in → app routes. Redirect to onboarding for incomplete profiles is added in Milestone 2. Consent to the privacy policy is passed in signup metadata and recorded by a DB trigger, which rejects signup without it. Route protection is UX only; data protection is RLS.
 
 ## AI coaching (Milestone 7)
 ```

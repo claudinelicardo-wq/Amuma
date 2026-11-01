@@ -2,7 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Link, type Href } from 'expo-router';
 import { Pressable, View } from 'react-native';
 
-import { Screen, Text } from '@/components/ui';
+import { Button, Screen, Text } from '@/components/ui';
+import { signOut } from '@/features/auth/api';
 import { minTouchTarget, useTheme } from '@/theme';
 
 const ITEMS: { href: Href; label: string }[] = [
@@ -41,6 +42,7 @@ export default function SettingsScreen() {
           </Link>
         ))}
       </View>
+      <Button label="Sign out" variant="secondary" onPress={() => void signOut()} />
     </Screen>
   );
 }

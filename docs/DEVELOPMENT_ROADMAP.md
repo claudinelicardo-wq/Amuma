@@ -3,6 +3,10 @@
 ## Done: Foundation
 Expo SDK 58 project, dependencies, design tokens + light/dark/system theming with persisted preference, Expo Router skeleton (5 tabs, auth, onboarding, settings, Glucose Smart), UI primitives, Supabase client stub, ESLint/Jest/TypeScript, docs.
 
+## Milestone 1 status: code complete, not yet verified against a live Supabase project
+Delivered: migration 1 (profiles, user_consents, signup trigger, `delete_my_account`, RLS), SecureStore-backed session storage, Zod-validated sign-in/sign-up, session provider, route gate (`Stack.Protected`), sign out, account deletion, TextField component. Verified: RLS/trigger tests on local Postgres, 23 Jest tests, typecheck, lint, Android bundle. **Not verified:** real signup/sign-in/deletion against Supabase, email-confirmation flow, and on-device behavior (needs your Supabase project; see `supabase/README.md`).
+Deferred to Milestone 2: redirect to onboarding for users without `onboarding_completed_at` (onboarding is still a placeholder, so signed-in users go straight to the tabs).
+
 ## Milestones
 | # | Scope | Exit criteria |
 | --- | --- | --- |
