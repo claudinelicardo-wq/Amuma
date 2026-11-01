@@ -9,25 +9,31 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { SessionProvider, useSession } from '@/features/auth/SessionProvider';
+import { useOnboardingHydrated, useOnboardingStore } from '@/stores/onboardingStore';
 import { ThemeProvider, useTheme } from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
 
 function ThemedStack() {
   const { colors, scheme } = useTheme();
-  const { session, loading } = useSession();
-  if (loading) return null; // splash stays up until the stored session is read
-  const signedIn = !!session;
+  const { session, loading, previewMode } = useSession();
+  const hydrated = useOnboardingHydrated();
+  const onboarded = useOnboardingStore((st) => st.completed);
+  if (loading || !hydrated) return null; // splash stays up until stored state is read
+  // Preview mode (no Supabase configured) behaves as signed in so the app can be explored locally.
+  const signedIn = !!session || previewMode;
   return (
     <>
       <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: colors.background } }}>
         {/* Route protection is UX only; data protection is enforced by RLS. */}
-        <Stack.Protected guard={signedIn}>
+        <Stack.Protected guard={signedIn && onboarded}>
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="settings" />
           <Stack.Screen name="glucose-smart" />
+        </Stack.Protected>
+        <Stack.Protected guard={signedIn && !onboarded}>
+          <Stack.Screen name="(onboarding)" />
         </Stack.Protected>
         <Stack.Protected guard={!signedIn}>
           <Stack.Screen name="(auth)" />

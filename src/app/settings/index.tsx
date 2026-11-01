@@ -4,6 +4,8 @@ import { Pressable, View } from 'react-native';
 
 import { Button, Screen, Text } from '@/components/ui';
 import { signOut } from '@/features/auth/api';
+import { useSession } from '@/features/auth/SessionProvider';
+import { useOnboardingStore } from '@/stores/onboardingStore';
 import { minTouchTarget, useTheme } from '@/theme';
 
 const ITEMS: { href: Href; label: string }[] = [
@@ -19,6 +21,8 @@ const ITEMS: { href: Href; label: string }[] = [
 
 export default function SettingsScreen() {
   const { colors, radius } = useTheme();
+  const { previewMode } = useSession();
+  const resetOnboarding = useOnboardingStore((st) => st.reset);
   return (
     <Screen contentStyle={{ paddingTop: 0 }}>
       <View style={{ backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1, borderColor: colors.border, overflow: 'hidden' }}>
@@ -42,7 +46,11 @@ export default function SettingsScreen() {
           </Link>
         ))}
       </View>
-      <Button label="Sign out" variant="secondary" onPress={() => void signOut()} />
+      {previewMode ? (
+        <Button label="Restart onboarding (preview mode)" variant="secondary" onPress={resetOnboarding} />
+      ) : (
+        <Button label="Sign out" variant="secondary" onPress={() => void signOut()} />
+      )}
     </Screen>
   );
 }

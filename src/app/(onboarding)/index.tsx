@@ -1,5 +1,6 @@
-import { PlaceholderScreen } from '@/components/ui';
+import { Redirect } from 'expo-router';
 
-export default function OnboardingScreen() {
-  return <PlaceholderScreen title="Welcome" milestone="Milestone 2" description="Progressive onboarding ending in a seven-day starter plan." />;
+/** Group entry point: the router lands here when the onboarding group is activated. */
+export default function OnboardingIndex() {
+  return <Redirect href="/welcome" />;
 }

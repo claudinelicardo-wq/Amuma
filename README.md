@@ -24,7 +24,7 @@ npx expo start
 
 Scripts: `npm run typecheck` · `npm run lint` · `npm test` · `./supabase/tests/run-local.sh` (RLS tests on local Postgres).
 
-Without Supabase credentials the app still launches (design system and navigation); backend features arrive from Milestone 1.
+Without Supabase credentials the app runs in **preview mode**: no account is needed and data stays on the device, so you can explore onboarding and navigation. Sign-in and sync need a Supabase project (see `supabase/README.md`).
 
 ## Security rules
 

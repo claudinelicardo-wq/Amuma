@@ -7,6 +7,17 @@ Expo SDK 58 project, dependencies, design tokens + light/dark/system theming wit
 Delivered: migration 1 (profiles, user_consents, signup trigger, `delete_my_account`, RLS), SecureStore-backed session storage, Zod-validated sign-in/sign-up, session provider, route gate (`Stack.Protected`), sign out, account deletion, TextField component. Verified: RLS/trigger tests on local Postgres, 23 Jest tests, typecheck, lint, Android bundle. **Not verified:** real signup/sign-in/deletion against Supabase, email-confirmation flow, and on-device behavior (needs your Supabase project; see `supabase/README.md`).
 Deferred to Milestone 2: redirect to onboarding for users without `onboarding_completed_at` (onboarding is still a placeholder, so signed-in users go straight to the tabs).
 
+## Milestone 2 status: onboarding built locally; backend sync on hold
+Supabase is on hold by decision, so onboarding runs **on-device only**:
+- 11 skippable questions (config-driven, `features/onboarding/steps.ts`), Zod-validated, covering PMOS context, goals, activity, time, diet, allergies, budget, exercise, coaching mode, reminders and optional health-data consent.
+- Deterministic starter-plan engine (`features/onboarding/logic/starterPlan.ts`) over a draft habit catalog (`features/habits/catalog.ts`): honors time, budget, activity level and exercise preferences; ramps gently; anchors the top habit daily; empty plan for self-directed users. No AI involved.
+- Plan review: remove ("Not for me"), add own habits, or continue without a plan.
+- Answers persist in the encrypted keychain store (`stores/onboardingStore.ts`), flagged as interim.
+- **Preview mode:** with no Supabase credentials the app behaves as signed in so it can be explored; Settings offers "Restart onboarding".
+- Verified in a browser build: onboarding flow, rejecting an item, persistence across reload, signed-out routing, form validation and the network-failure message. Not verified on a phone.
+- **Still to do when Supabase returns:** `health_profiles` migration + RLS, sync completed onboarding, record `health_data` consent, set `onboarding_completed_at`, and make onboarding completion server-backed.
+- Remaining gaps: the catalog needs professional review; "Edit" is remove/add only (no per-item time or day editing yet); chosen habits are not yet turned into real habits (Milestone 3).
+
 ## Milestones
 | # | Scope | Exit criteria |
 | --- | --- | --- |
